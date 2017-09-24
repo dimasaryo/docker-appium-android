@@ -1,0 +1,25 @@
+# Note: It requires docker-compose 1.13.0
+#
+# Usage: docker-compose up -d
+version: "2.2"
+
+services:
+  # Selenium hub
+  selenium_hub:
+    image: selenium/hub:3.4.0
+    ports:
+      - "40000:4444"
+
+  # Docker-Android
+  samsung_galaxy_web_5.1.1:
+    image: dimasaryoprakoso/docker-android-x86-5.1.1:1.0.1
+    privileged: true
+    # Increase scale number if needed
+    scale: 5
+    ports:
+      - 6080
+    environment:
+      - DEVICE=Samsung Galaxy S6
+      - CONNECT_TO_GRID=True
+      - APPIUM=true
+      - SELENIUM_HOST=selenium_hub
